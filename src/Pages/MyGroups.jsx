@@ -12,9 +12,9 @@ import {
   Loader2,
   AlertCircle
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "@/Components/ui/card";
+import { Badge } from "@/Components/ui/badge";
 import { toast } from "sonner";
 import axios from "axios";
 import { routes } from "../../routes.js";

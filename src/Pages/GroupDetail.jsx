@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 
 const GroupDetail = () => {
   const { id } = useParams();

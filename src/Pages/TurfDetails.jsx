@@ -4,9 +4,9 @@ import { MapPin, Star, Clock, Car, Droplets, Lightbulb,Quote, Coffee, Dumbbell, 
 import { motion, AnimatePresence } from 'framer-motion';
 import { routes } from "../../routes";
 import Footer from '@/component/Footer';
-import { Badge } from '@/components/ui/badge';
-import { Calendar } from '@/components/ui/calendar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/Components/ui/badge';
+import { Calendar } from '@/Components/ui/calendar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import axios from 'axios';
 
 const facilityIcons = {

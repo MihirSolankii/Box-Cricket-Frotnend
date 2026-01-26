@@ -4,17 +4,17 @@ import { format } from 'date-fns';
 import { MapPin, Clock, Calendar, Check, ChevronLeft, CreditCard, Loader2 } from 'lucide-react';
 import Header from '@/component/Headers';
 import Footer from '@/component/Footer';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/Components/ui/dialog';
 import { routes } from '../../routes';
 
 

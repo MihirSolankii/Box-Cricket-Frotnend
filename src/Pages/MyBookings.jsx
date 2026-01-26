@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { Calendar, Clock, MapPin, CalendarX2, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import Header from '@/component/Headers';
 import Footer from '@/component/Footer';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/Components/ui/card';
+import { Badge } from '@/Components/ui/badge';
+import { Button } from '@/Components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {routes} from "../../routes.js"
