@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/Components/ui/card";
 
 export default function BoxCategories() {
   const categories = [1, 2, 3, 4, 5];

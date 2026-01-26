@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Star, Heart } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 
 const TurfCard = ({ turf }) => {
 
