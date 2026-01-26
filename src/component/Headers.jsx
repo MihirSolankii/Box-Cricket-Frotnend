@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Bell, User, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/Components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/Components/ui/dropdown-menu';
 import axios from 'axios';
 import { routes } from '../../routes.js'; // Ensure this path is correct
 
