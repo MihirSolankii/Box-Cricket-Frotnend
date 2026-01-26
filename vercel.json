@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://box-cricket-backend-v7vh.onrender.com/api/$1"
+    }
+  ]
+}
