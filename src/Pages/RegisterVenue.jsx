@@ -5,13 +5,13 @@ import Header from '@/Admin/components/Header'
 import DashboardContent from '@/Admin/components/DashboardContent'
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import App from "../../../admin/admin-dashboard/src/App"
+// import App from "../../../admin/admin-dashboard/src/App"
 
 function RegisterVenue() {
   return (
     
   <div className="min-h-screen bg-background flex font-sans text-foreground">
-     <App/>
+     <p> hello register </p>
     </div>
   
   )
