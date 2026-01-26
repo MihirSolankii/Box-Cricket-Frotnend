@@ -3,7 +3,7 @@ import Navbar from "./Components/Navbar";
 import BoxCricketDashboard from "../src/Components/BoxCricketDashboard"
 import { Route, Routes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster as Sonner } from "@/Components/ui/sonner";
 import Turfs from "./Pages/Turfs";
 import TurfDetails from "./Pages/TurfDetails";
 import Index from "./Pages/Index";
