@@ -5,7 +5,7 @@ import { MapPin, Clock, Calendar, Check, ChevronLeft, CreditCard, Loader2 } from
 import Header from '@/component/Headers';
 import Footer from '@/component/Footer';
 import { Button } from '@/Components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import {
