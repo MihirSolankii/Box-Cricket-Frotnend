@@ -3,15 +3,15 @@ import { Search, MapPin, ChevronLeft, Loader2 } from 'lucide-react';
 import Header from '@/component/Header';
 import Footer from '@/component/Footer';
 import TurfCard from '@/component/TurfCard';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/Components/ui/input';
+import { Button } from '@/Components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/Components/ui/select';
 import axios from "axios";
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
