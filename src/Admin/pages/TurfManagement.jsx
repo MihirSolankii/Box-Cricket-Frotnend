@@ -85,14 +85,12 @@ export default function TurfManagement() {
                 description: generalInfo.description,
                 pricePerHour: Number(generalInfo.pricePerHour)
             };
-            console.log("Updating General Info Payload:", payload);
 
             const response = await axios.put(
-                `https://nonsolidified-annika-criminally.ngrok-free.dev/api/admin/update-box-details/${boxId}`,
+                `https://box-cricket-backend-v7vh.onrender.com/api/admin/update-box-details/${boxId}`,
                 payload,
                 getAuthHeader()
             );
-            console.log("Update General Response:", response.data);
             toast.success("Turf details updated successfully");
         } catch (error) {
             console.error("Update General Error:", error);
@@ -117,14 +115,12 @@ export default function TurfManagement() {
                 courtNumber: Number(courtId),
                 isAvailable: isAvailable
             };
-            console.log("Updating Court Availability Payload:", payload);
 
             const response = await axios.put(
-                `https://nonsolidified-annika-criminally.ngrok-free.dev/api/admin/update-court-availability/${boxId}`,
+                `https://box-cricket-backend-v7vh.onrender.com/api/admin/update-court-availability/${boxId}`,
                 payload,
                 getAuthHeader()
             );
-            console.log("Update Court Response:", response.data);
             toast.success(`Court ${courtId} availability updated`);
         } catch (error) {
             console.error("Update Court Error:", error);
@@ -141,14 +137,12 @@ export default function TurfManagement() {
 
         try {
             const payload = { ...operatingHours };
-            console.log("Updating Hours Payload:", payload);
 
             const response = await axios.put(
-                `https://nonsolidified-annika-criminally.ngrok-free.dev/api/admin/update-operating-hours/${boxId}`,
+                `https://box-cricket-backend-v7vh.onrender.com/api/admin/update-operating-hours/${boxId}`,
                 payload,
                 getAuthHeader()
             );
-            console.log("Update Hours Response:", response.data);
             toast.success("Operating hours updated");
         } catch (error) {
             console.error("Update Hours Error:", error);
@@ -164,12 +158,10 @@ export default function TurfManagement() {
 
         setLoading(true);
         try {
-            console.log("Deleting Box:", boxId);
             const response = await axios.delete(
-                `https://nonsolidified-annika-criminally.ngrok-free.dev/api/admin/delete-box/${boxId}`,
+                `https://box-cricket-backend-v7vh.onrender.com/api/admin/delete-box/${boxId}`,
                 getAuthHeader()
             );
-            console.log("Delete Response:", response.data);
             toast.success("Turf deleted successfully");
 
             // Cleanup and Redirect

@@ -6,7 +6,6 @@ import { useNavigate ,Link} from 'react-router-dom';
 
 const VenueCard = ({ venue = {}, variant = 'default' }) => {
 
-  console.log("in the venue section ",venue );
   
   const [isFavorite, setIsFavorite] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -15,29 +14,30 @@ const VenueCard = ({ venue = {}, variant = 'default' }) => {
   // --- 1. SAFE DATA & DEFAULTS ---
   const venueName = venue?.name || "Unknown Venue";
   const venueAddress = venue?.vicinity || venue?.address?.fullAddress || "Location not available";
-  const venueRating = venue?.averageRating || "10"; 
+  const venueRating = venue?.averageRating
+    ? Number(venue.averageRating).toFixed(1)
+    : venue?.rating
+    ? Number(venue.rating).toFixed(1)
+    : "4.8";
+
+  // Extract the proper ID: Google Place ID is googlePlaceId or place_id
+  const turfId = venue?.googlePlaceId || venue?.place_id || venue?.placeId || venue?._id || venue?.id;
 
   const venuePrice = venue?.pricePerHour || 1200; 
   const isOpen = venue?.isActive; 
   const discount = venue?.discount || null;
-  // console.log("each box photo url",venue.photos[0].photo_reference);
-  console.log(venueName);
-  
-  // console.log(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${venue.photos[0].photo_reference}&key=AIzaSyAEYJ2S1w2sr-tZu3V2hiQIrQ8aIdmiqw4`);
-  
-     const clickhandler=()=>{
-      console.log("button clciker");
-     navigate(`/turf/${venue.place_id}`)
-    console.log(venue);
-    
-      
-     }
-  
+
+  const clickhandler = (e) => {
+    e?.stopPropagation?.();
+    if (turfId) {
+      navigate(`/turf/${turfId}`);
+    }
+  };
+
   // Photo Logic: Use Google Photo or Fallback
   const photoUrl = (venue?.images && venue.images.length > 0)
-    // ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${venue.photos[0].photo_reference}&key=AIzaSyAEYJ2S1w2sr-tZu3V2hiQIrQ8aIdmiqw4`
-    ?`${venue.images[0]}`
-     :'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&q=80&w=800'; 
+    ? `${venue.images[0]}`
+    : 'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&q=80&w=800'; 
   
    
   // Text Truncation
@@ -56,7 +56,8 @@ const VenueCard = ({ venue = {}, variant = 'default' }) => {
     return (
       <motion.div 
         whileHover={{ y: -5 }}
-        className="group w-full bg-card rounded-2xl overflow-hidden border border-border/40 hover:border-primary/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+        onClick={clickhandler}
+        className="group w-full bg-card rounded-2xl overflow-hidden border border-border/40 hover:border-emerald-500/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer"
       >
         {/* IMAGE SECTION - Fixed Height */}
         <div className="relative h-48 bg-muted overflow-hidden shrink-0">
@@ -120,11 +121,12 @@ const VenueCard = ({ venue = {}, variant = 'default' }) => {
               className={`w-full h-9 text-xs font-semibold shadow-sm transition-all ${
                 !isOpen 
                   ? 'bg-slate-100 text-slate-400 hover:bg-slate-100 cursor-not-allowed' 
-                  : 'hover:scale-[1.02] active:scale-[0.98]'
+                  : 'bg-emerald-600 hover:bg-emerald-700 text-white hover:scale-[1.02] active:scale-[0.98]'
               }`}
-              
             >
-          <Link to={`/turf/${venue.place_id}`}>View More </Link>
+              <Link to={`/turf/${turfId}`} onClick={(e) => e.stopPropagation()}>
+                View More
+              </Link>
             </Button>
           </div>
         </div>

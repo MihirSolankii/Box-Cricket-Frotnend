@@ -5,7 +5,7 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import { User, Mail, Lock, Phone, Loader2, ArrowRight, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { da } from 'date-fns/locale';
+import { routes } from "../../routes";
 
 
 // --- Custom Input Component with Formik & Icons ---
@@ -126,7 +126,6 @@ export default function Signup() {
               validationSchema={validationSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 try {
-                  // Map Formik 'name' to API 'userName'
                   const payload = {
                     name: values.name,
                     email: values.email,
@@ -135,34 +134,19 @@ export default function Signup() {
                     role: 'user', 
                   };
 
-                   try {
-                    const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/signup', payload);
-                    console.log("response",response);
-                    const data = response.data; 
-                     console.log("Signup Success:", data);
-                     console.log("id",data?.data_id);
-                     console.log("email",data?.data.email);
-                  // Store Token
-                  if (data.token) localStorage.setItem('UserCricBoxToken', data.token);
-                  if (data.user?.name) localStorage.setItem('userName', data.user.name);
-                  if(data?.data?._id) localStorage.setItem('UserId', data.data?._id);
-                  if(data?.data?.email) localStorage.setItem('userEmail', data.data?.email);
+                  const response = await axios.post(routes.signup, payload);
+                  const data = response.data;
+
+                  const userData = data?.data || data?.user;
+                  if (data?.token) localStorage.setItem('UserCricBoxToken', data.token);
+                  if (userData?.name) localStorage.setItem('userName', userData.name);
+                  if (userData?._id || userData?.id) localStorage.setItem('UserId', userData._id || userData.id);
+                  if (userData?.email) localStorage.setItem('userEmail', userData.email);
+
                   toast.success("Account created successfully!");
                   toast.success("Please verify your email to continue.");
                   navigate("/login");
                   resetForm();
-                    
-                   } catch (error) {
-                      console.log("api call error ",error);
-                      const msg = error.response?.data?.message || "Signup failed. Please try again.";
-                      toast.error(msg);
-                   }
-                    
-    
-
-                
-                 
-                  
                 } catch (error) {
                   console.error("Signup Error:", error);
                   const msg = error.response?.data?.message || "Signup failed. Please try again.";

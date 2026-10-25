@@ -18,7 +18,6 @@ function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your form submission logic here
-    console.log('Form submitted:', formData);
     alert("Thanks for contacting us!");
   };
 

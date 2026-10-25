@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ArrowLeft, Plus, Settings, Check, X, 
+  ArrowLeft, Home, Plus, Settings, Check, X, 
   Wallet, Filter, Search, Calendar, 
   Loader2, Ban, UserPlus, Crown, Bell
 } from 'lucide-react';
@@ -77,8 +77,6 @@ const GroupDashboard = () => {
                   { groupId, totalAmount },
                   { headers: { Authorization: `Bearer ${token}` } }
                 );
-                console.log("Admin triggered settlement calculation");
-                console.log("resposne if settlement created::::",resposne.data);
                 
              } catch (err) {
                 console.error("Settlement creation/update warning:", err);
@@ -112,7 +110,6 @@ const GroupDashboard = () => {
 
       if(response.data?.settlement) {
         setSettlementData(response.data);
-        console.log("Settlement Details Fetched:", response.data.settlement._id);
         localStorage.setItem("SettlementId",response.data.settlement._id);
        
         
@@ -120,7 +117,6 @@ const GroupDashboard = () => {
         await fetchMyStatus(response.data.settlement._id);
       }
     } catch (error) {
-      console.log("Settlement fetch info:", error.response?.data?.message || error.message);
       // It's okay if 404 (Settlement not created yet), just clear data
       setSettlementData(null);
     } finally {
@@ -244,7 +240,16 @@ const GroupDashboard = () => {
     );
   }
 
-  if (!groupData) return <div className="p-8 text-center">Group Not Found</div>;
+  if (!groupData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-slate-50 gap-4">
+        <p className="text-lg font-semibold text-slate-800">Group Not Found</p>
+        <Button onClick={() => navigate('/')} className="gap-2">
+          <Home className="h-4 w-4" /> Go to Homepage
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
@@ -252,11 +257,31 @@ const GroupDashboard = () => {
         
         {/* --- HEADER --- */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <Button variant="outline" size="icon" onClick={() => navigate('/my-groups')} className="rounded-full flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {/* Direct Home Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/')}
+              className="rounded-full flex-shrink-0 gap-1.5 bg-white hover:bg-slate-100 text-slate-700 shadow-sm border-slate-200"
+              title="Go to Homepage"
+            >
+              <Home className="h-4 w-4 text-emerald-600" />
+              <span className="font-semibold text-xs sm:text-sm">Home</span>
+            </Button>
+
+            {/* Back to My Groups Button */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => navigate('/my-groups')}
+              className="rounded-full flex-shrink-0 bg-white hover:bg-slate-100 border-slate-200"
+              title="Back to My Groups"
+            >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <div className="min-w-0">
+
+            <div className="min-w-0 ml-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 truncate">{groupData.name}</h1>
                 {isAdmin && <Badge className="bg-primary/10 text-primary text-xs flex-shrink-0">Admin</Badge>}

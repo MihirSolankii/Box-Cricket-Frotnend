@@ -42,7 +42,7 @@ const Group = () => {
             headers: { Authorization: `Bearer ${token}` }
           });
           
-          console.log("API Response:", response.data); // Debug log
+          // Debug log
 
           // HANDLE BOTH FORMATS: Directly Array OR Object with 'users' key
           if (Array.isArray(response.data)) {
@@ -85,7 +85,6 @@ const Group = () => {
       );
 
 
-      console.log("group data",response);
       
 
       if (response.data) {
@@ -133,7 +132,6 @@ const Group = () => {
       );
 
 
-      console.log("inbvitatipn sent",response);
       
       setInvitedUsers(prev => [...prev, user._id]);
       toast.success(`Invited ${user.nickname}`);

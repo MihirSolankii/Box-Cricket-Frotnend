@@ -6,7 +6,6 @@ import { Button } from '@/Components/ui/button';
 
 const TurfCard = ({ turf }) => {
 
-  console.log("turfcard page is ",turf);
   
   const [isLiked, setIsLiked] = useState(false);
   const [expanded, setExpanded] = useState(false);

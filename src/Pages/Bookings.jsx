@@ -34,7 +34,6 @@ try {
     throw new Error(tempBookingData.message || 'Failed to lock slot');
   }
 
-  console.log("booking response:", tempBookingData);
 
   const tempBookingId = tempBookingData.booking._id;
 
@@ -57,7 +56,6 @@ try {
     throw new Error(orderData.message || 'Failed to create payment order');
   }
 
-  console.log("order response:", orderData);
 
 
 
@@ -76,11 +74,9 @@ try {
 
   const token = localStorage.getItem("UserCricBoxToken");
   const userId = localStorage.getItem("UserId")
-  console.log("token at booking", token);
-  console.log("useri at booking", userId);
   const { startTime, endTime } = parseSlot(slot);
-  // console.log("starttime",startTime);
-  // console.log("endtime",endTime);
+  // 
+  // 
 
   const datas = {
     boxId: turf._id,
@@ -90,7 +86,7 @@ try {
     endTime: endTime,
     userId
   };
-  // console.log("payload",datas);
+  // 
 
 
   const tempBookingResponse = await fetch('https://box-cricket-backend-v7vh.onrender.com/api/booking/create-temporary', {
@@ -116,11 +112,9 @@ try {
   }
 
   const response = await tempBookingResponse.json();
-  console.log("booking resposne", response);
   setIsProcessing(false);
 
   const tempBookingId = response.booking._id;
-  console.log("booking id for the next input ", tempBookingId);
   orderResponse();
 
 
@@ -137,14 +131,12 @@ try {
       }),
     });
 
-    console.log("orders are ::::", await orderResponse.json());
 
     if (!orderResponse.ok) {
       throw new Error('Failed to create payment order');
     }
 
     const responses = await orderResponse.json();
-    console.log("now order resposne is there", responses);
 
   }
 

@@ -1,47 +1,64 @@
 @import "tailwindcss";
 
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 142 70% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 142 70% 95%;
+  --accent-foreground: 142 70% 35%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 142 70% 45%;
+}
+
 @theme {
-  /* Define theme variables using HSL values */
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222 47% 11%);
-  
   --color-card: hsl(0 0% 100%);
   --color-card-foreground: hsl(222 47% 11%);
-  
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(222 47% 11%);
-  
   --color-primary: hsl(142 70% 45%);
   --color-primary-foreground: hsl(0 0% 100%);
-  
   --color-secondary: hsl(210 40% 96%);
   --color-secondary-foreground: hsl(222 47% 11%);
-    
   --color-muted: hsl(210 40% 96%);
   --color-muted-foreground: hsl(215 16% 47%);
-  
   --color-accent: hsl(142 70% 95%);
   --color-accent-foreground: hsl(142 70% 35%);
-  
   --color-destructive: hsl(0 84% 60%);
   --color-destructive-foreground: hsl(0 0% 100%);
-  
   --color-border: hsl(214 32% 91%);
   --color-input: hsl(214 32% 91%);
   --color-ring: hsl(142 70% 45%);
-  
   --color-success: hsl(142 76% 36%);
   --color-success-foreground: hsl(0 0% 100%);
-  
   --color-warning: hsl(38 92% 50%);
   --color-warning-foreground: hsl(0 0% 100%);
-  
   --radius: 0.75rem;
+}
+
+html, body {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  min-height: 100vh;
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: #ffffff;
+    color: hsl(222 47% 11%);
     font-family: 'Inter', system-ui, sans-serif;
   }
 }

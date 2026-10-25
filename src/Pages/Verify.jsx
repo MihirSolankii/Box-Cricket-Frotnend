@@ -22,9 +22,12 @@ const Verify = () => {
     );
 
     const data = await res.json();
-    console.log("data is :::",data);
 
     if (data.success) {
+      if (data.token) localStorage.setItem("UserCricBoxToken", data.token);
+      if (data.user?._id) localStorage.setItem("UserId", data.user._id);
+      if (data.user?.name) localStorage.setItem("userName", data.user.name);
+      if (data.user?.email) localStorage.setItem("userEmail", data.user.email);
       setStatus("success");
       setMessage(data.message || "Email verified successfully!");
       navigate("/complete-profile");

@@ -6,7 +6,6 @@ import { toast } from 'sonner';
 
 export default function ResetPassword() {
     const { token } = useParams();
-    console.log(token);
 
     const navigate = useNavigate();
 
@@ -29,12 +28,10 @@ export default function ResetPassword() {
         try {
             // Using localhost as per prompt request: http://localhost:5000/api/auth/reset-password/TOKEN
             // Payload usually expects { password }
-            console.log("token is passthrough header amin try block", token);
 
-            const response = await axios.post(`https://nonsolidified-annika-criminally.ngrok-free.dev/api/auth/reset-password?resetToken=${token}`, {
+            const response = await axios.post(`https://box-cricket-backend-v7vh.onrender.com/api/auth/reset-password?resetToken=${token}`, {
                 newPassword: formData.password
             });
-            console.log("Reset Password Response:", response.data);
 
             toast.success("Password reset successfully!");
 

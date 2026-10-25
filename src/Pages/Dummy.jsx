@@ -135,7 +135,6 @@ function ScoreCard() {
 
         //  TOAST NOTIFICATION HANDLER
         socket.on("notification", (data) => {
-            console.log("🔔 Notification:", data);
 
             // Display toast based on type
             switch (data.type) {

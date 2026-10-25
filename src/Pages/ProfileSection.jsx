@@ -27,7 +27,6 @@ function ProfileSection() {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log("Profile Data:", response.data);
 
         if (response.data.success) {
           setUserData(response.data.user);

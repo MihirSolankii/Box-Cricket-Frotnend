@@ -16,10 +16,16 @@ export default function CompleteProfile() {
     lng: ''
   });
 
-  // 1. Fetch Location from Local Storage on Mount
+  // 1. Fetch Location from Local Storage on Mount or detect via navigator
   useEffect(() => {
-    const storedLocation = localStorage.getItem("userLocation");
+    const token = localStorage.getItem("UserCricBoxToken");
+    if (!token) {
+      toast.warning("Please login to complete your profile.");
+      navigate("/login");
+      return;
+    }
 
+    const storedLocation = localStorage.getItem("userLocation");
     if (storedLocation) {
       try {
         const parsed = JSON.parse(storedLocation);
@@ -29,15 +35,30 @@ export default function CompleteProfile() {
             lat: parsed.latitude,
             lng: parsed.longitude
           });
-          console.log("Location loaded from storage:", parsed);
+          return;
         }
       } catch (e) {
         console.error("Error parsing location", e);
       }
-    } else {
-      toast.warning("Location not found. Please enable location services.");
     }
-  }, []);
+
+    // Try geolocation if not in storage
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          setLocationStatus({
+            found: true,
+            lat: latitude,
+            lng: longitude
+          });
+          localStorage.setItem("userLocation", JSON.stringify({ latitude, longitude }));
+        },
+        () => {
+        }
+      );
+    }
+  }, [navigate]);
 
   // 2. Handle Form Submission
   const handleSubmit = async (e) => {
@@ -48,31 +69,30 @@ export default function CompleteProfile() {
       return;
     }
 
-    if (!locationStatus.found) {
-      toast.error("Location data is missing. Please refresh or enable location.");
-      return;
-    }
-
     setLoading(true);
 
     try {
       const token = localStorage.getItem("UserCricBoxToken");
+      if (!token) {
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
 
       const payload = {
-        nickname: nickname,
-        latitude: String(locationStatus.lat), // Ensure string format as per your requirement
-        longitude: String(locationStatus.lng)
+        nickname: nickname.trim(),
+        latitude: locationStatus.found ? String(locationStatus.lat) : undefined,
+        longitude: locationStatus.found ? String(locationStatus.lng) : undefined
       };
 
       const response = await axios.post(`${routes.UserProfile}`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      console.log("Profile Updated:", response.data);
       toast.success("Profile completed successfully!");
 
-      // Update local user data if necessary
-      localStorage.setItem('userNickname', nickname);
+      // Update local user data
+      localStorage.setItem('userNickname', nickname.trim());
 
       navigate('/'); // Redirect to Home/Dashboard
 
@@ -174,7 +194,7 @@ export default function CompleteProfile() {
             {/* Action Button */}
             <button
               type="submit"
-              disabled={loading || !locationStatus.found}
+              disabled={loading || !nickname.trim()}
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-3.5 rounded-xl font-bold transition-all transform active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {loading ? (

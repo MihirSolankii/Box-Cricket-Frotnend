@@ -6,7 +6,6 @@ import { toast } from 'sonner';
 
 export default function ResetPassword() {
     const { token } = useParams();
-    console.log(token);
 
     const navigate = useNavigate();
 
@@ -26,30 +25,40 @@ export default function ResetPassword() {
 
         setLoading(true);
 
+
         try {
-            // Using localhost as per prompt request: http://localhost:5000/api/auth/reset-password/TOKEN
-            // Payload usually expects { password }
-            console.log("token is passthrough header amin try block", token);
+            const response = await axios.post(
+                `https://box-cricket-backend-v7vh.onrender.com/api/auth/reset-password?resetToken=${encodeURIComponent(token)}`,
+                {
+                    newPassword: formData.password
+                }
+            );
 
-            const response = await axios.post(`https://box-cricket-backend-v7vh.onrender.com/api/auth/reset-password?resetToken=${token}`, {
-                newPassword: formData.password
-            });
-            console.log("Reset Password Response:", response.data);
-            
-            toast.success("Password reset successfully!");
+            // Check the backend response before showing success
+            if (response.data?.success === true) {
+                toast.success("Password reset successfully!");
 
-            // Redirect to login after short delay
-            setTimeout(() => {
-                navigate('/login');
-            }, 2000);
+                setTimeout(() => {
+                    navigate("/login");
+                }, 2000);
+            } else {
+                toast.error(
+                    response.data?.message || "Failed to reset password. Link might be expired."
+                );
+            }
 
         } catch (error) {
             console.error("Reset Password Error:", error);
-            const msg = error.response?.data?.message || "Failed to reset password. Link might be expired.";
+
+            const msg =
+                error.response?.data?.message ||
+                "Failed to reset password. Link might be expired.";
+
             toast.error(msg);
         } finally {
             setLoading(false);
         }
+
     };
 
     return (

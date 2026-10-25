@@ -48,7 +48,6 @@ const Turfs = () => {
         lng: "70.7756032",
       });
       // Safety check to ensure array exists
-      console.log(response);
       
       setTurfbook(response.data.boxes || []);
     } catch (error) {

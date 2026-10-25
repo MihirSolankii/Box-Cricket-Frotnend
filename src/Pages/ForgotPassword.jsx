@@ -17,7 +17,6 @@ export default function ForgotPassword() {
         try {
          
             const response = await axios.post(`${routes.ForgetPassword}`, { email });
-            console.log("Forgot Password Response:", response.data);
 
             toast.success("Reset link sent to your email!");
             setSubmitted(true);

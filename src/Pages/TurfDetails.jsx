@@ -78,7 +78,6 @@ const [selectedCourt, setSelectedCourt] = useState(null);
       if (response.data.success) {
         // The backend now returns a single unified 'response' object
         setBoxData(response.data.response);
-        console.log(response.data);
         setBoxId(response.data.response.boxId)
         
       } else {
@@ -97,15 +96,12 @@ const [selectedCourt, setSelectedCourt] = useState(null);
   }, [id]);
  useEffect(() => {
   if (boxData?.boxId) {
-    console.log("Box ID:", boxData.boxId);
    
     
   }
 }, [boxData]);
 
 useEffect(()=>{
- console.log("selected DataL",selectedDate);
- console.log("selected slot",selectedSlot);
  
 },[])
 
@@ -114,10 +110,7 @@ useEffect(()=>{
 
 const buildBookingPayload = () => {
   const { startTime, endTime } = parseSlot(selectedSlot);
-    console.log("courtId",selectedCourt._id);
-    console.log(startTime);
     
-    console.log(selectedDate);
     
   return {
     date: formatDate(selectedDate),
@@ -135,8 +128,6 @@ const isAvailableBooking = async () => {
       `${routes.isAvailable}/${boxData?.boxId}`,
     payload
     );
-     console.log("Payload sent:", payload);
-    console.log("Response:", response.data);
 
     setAvailabilityMsg(response.data.message);
     setIsAvailable(response.data.isAvailable);
@@ -195,17 +186,13 @@ const isAvailableBooking = async () => {
   
 
 const handleBookNow = async () => {
-  console.log("clicked book now");
 
   const available = await isAvailableBooking();
-  console.log("available:", available);
 
   if (!available) {
-    console.log("slot not available, stopping");
     return;
   }
 
-  console.log("inside handle book");
 
   navigate(`/booking/${boxData._id}`, {
     state: {

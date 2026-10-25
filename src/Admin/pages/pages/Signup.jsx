@@ -157,8 +157,7 @@ export default function Signup() {
                 phoneNumber: formData.phoneNumber
             };
 
-            const response = await axios.post('https://nonsolidified-annika-criminally.ngrok-free.dev/api/auth/signup', payload);
-            console.log('User Registered:', response.data);
+            const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/signup', payload);
 
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
@@ -212,15 +211,13 @@ export default function Signup() {
                 }
             };
 
-            console.log("Sending Final Payload:", payload); // Debugging
+            // Debugging
 
-            const response = await axios.post('https://nonsolidified-annika-criminally.ngrok-free.dev/api/auth/admin', payload, config);
-            console.log('Business Registered:', response.data);
+            const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/admin', payload, config);
 
             if (response.data && response.data.box && response.data.box._id) {
                 localStorage.setItem('boxId', response.data.box._id);
                 localStorage.setItem('boxDetails', JSON.stringify(response.data.box)); // Store full details for pre-fill
-                console.log("Box ID saved:", response.data.box._id);
             } else {
                 console.error("Box ID not found in response:", response.data);
                 // Fallback check if it's in the root

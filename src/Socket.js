@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
-// Connect to backend server
-const socket = io("https://box-cricket-backend-v7vh.onrender.com", {
+const SERVER_URL = import.meta.env.VITE_API_KEY || "https://box-cricket-backend-v7vh.onrender.com";
+const socket = io(SERVER_URL, {
   autoConnect: true,
   reconnection: true,
   reconnectionDelay: 1000,

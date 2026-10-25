@@ -43,10 +43,9 @@ export default function Login() {
                 localStorage.removeItem('rememberedEmail');
             }
 
-            const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/login', formData);
             const data = response.data;
 
-            console.log("Login Success:", data);
 
             // Store Data - Assuming standard structure, matching Signup logic
             // Adjust these key paths based on your actual Login API response structure!

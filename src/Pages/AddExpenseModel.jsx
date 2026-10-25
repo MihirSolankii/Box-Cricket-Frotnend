@@ -17,7 +17,6 @@ export default function AddExpenseModal({ open, setOpen }) {
 
   const handleSubmit = async () => {
     // API call here
-    console.log(form);
     setOpen(false);
   };
 

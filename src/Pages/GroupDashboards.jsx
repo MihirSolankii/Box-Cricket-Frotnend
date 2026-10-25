@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Settings, Check, X, Wallet, Filter, Search, Calendar, Loader2, Ban, UserPlus, Crown } from 'lucide-react';
+import { ArrowLeft, Home, Plus, Settings, Check, X, Wallet, Filter, Search, Calendar, Loader2, Ban, UserPlus, Crown } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/Components/ui/button';
@@ -56,7 +56,6 @@ const GroupDashboard = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPaymentData(response.data.data);
-      console.log("Settlement created:", response);
     } catch (error) {
       console.error("Settlement error:", error.response?.data || error.message);
       toast.error("Failed to create settlement");
@@ -105,7 +104,6 @@ const GroupDashboard = () => {
           `${routes.viewSettlement}/${groupId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log("Settlement details:", response.data);
         setSettlementdata(response.data);
       } catch (error) {
         console.error("Fetch settlement error:", error);
@@ -126,7 +124,6 @@ const GroupDashboard = () => {
           `${routes.viewMySettlement}/${groupId}/my-status`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log("My settlement status:", response.data);
       } catch (error) {
         console.error("Fetch my settlement error:", error);
         toast.error("Failed to load your settlement status");
@@ -270,18 +267,12 @@ const GroupDashboard = () => {
 
   // Debug logs
   useEffect(() => {
-    console.log("Group data:", groupData);
-    console.log("Is Admin:", isAdmin);
-    console.log("Admin ID:", groupData?.admin._id);
-    console.log("Current User ID:", currentUserId);
   }, [groupData, isAdmin, currentUserId]);
 
   useEffect(() => {
-    console.log("Payment data:", paymentData);
   }, [paymentData]);
 
   useEffect(() => {
-    console.log("Settlement data:", settlementdata);
   }, [settlementdata]);
 
   if (loading) {
@@ -303,14 +294,25 @@ const GroupDashboard = () => {
       <div className="bg-white border-b sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={() => navigate('/')}
+                variant="outline"
+                size="sm"
+                className="rounded-full gap-1.5"
+                title="Go to Homepage"
+              >
+                <Home className="h-4 w-4 text-emerald-600" />
+                <span className="font-semibold text-xs sm:text-sm">Home</span>
+              </Button>
               <Button
                 onClick={() => navigate('/my-groups')}
                 variant="ghost"
                 size="icon"
-                className="rounded-full hidden md:flex"
+                className="rounded-full"
+                title="Back to My Groups"
               >
-                <ArrowLeft />
+                <ArrowLeft className="h-4 w-4" />
               </Button>
               <div>
                 <div className="flex items-center gap-2">

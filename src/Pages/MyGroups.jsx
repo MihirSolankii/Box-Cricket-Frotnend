@@ -36,7 +36,6 @@ const MyGroups = () => {
         const response = await axios.get(`${routes.mygroup}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log("fetch the group detail::::",response.data);
 
         localStorage.setItem("GroupId",response.data._id)
         
@@ -69,7 +68,6 @@ const MyGroups = () => {
   };
 
   useEffect(()=>{
-   console.log(groups);
    
   },[groups])
 

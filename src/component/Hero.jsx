@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Sparkles, Trophy, ShieldCheck } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import heroImage from '@/assets/hero-cricket.jpg';
 
 const Hero = () => {
-  
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
+
   useEffect(() => {
     const controls = setTimeout(() => {
       if (count < 500) setCount(prev => Math.min(prev + 12, 500));
@@ -13,7 +15,7 @@ const Hero = () => {
     return () => clearTimeout(controls);
   }, [count]);
 
-  // --- 2. Magnetic Button Logic ---
+  // --- Magnetic Button Logic ---
   const btnX = useMotionValue(0);
   const btnY = useMotionValue(0);
   const springConfig = { damping: 20, stiffness: 150 };
@@ -27,7 +29,7 @@ const Hero = () => {
     btnY.set((clientY - (top + height / 2)) * 0.3);
   };
 
-  // --- 3. Image Tilt Logic (Your existing logic refined) ---
+  // --- Image Tilt Logic ---
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const mouseXSpring = useSpring(x);
@@ -42,60 +44,96 @@ const Hero = () => {
   };
 
   return (
-    <section className="py-12 md:py-20 overflow-hidden bg-background">
+    <section className="pt-8 pb-14 md:py-20 overflow-hidden bg-background relative">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         
-          <div className="space-y-6 ml-15  ">
+          <div className="space-y-6 lg:pr-6">
+            {/* Intro Trust Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold"
+            >
+              <Sparkles size={14} className="text-emerald-500" />
+              <span>India's Premier Box Cricket Booking Platform</span>
+            </motion.div>
          
             <div className="overflow-hidden">
               <motion.h1 
-                initial={{ y: 80, rotate: 5 }}
+                initial={{ y: 80, rotate: 3 }}
                 animate={{ y: 0, rotate: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-[1.1] tracking-tight"
               >
                 Find. Play. Win.
                 <br />
-                <span className="text-green-500">Book your box now</span>
+                <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-green-600 bg-clip-text text-transparent">
+                  Book your box now
+                </span>
               </motion.h1>
             </div>
 
             <motion.p 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg text-muted-foreground max-w-md"
+              transition={{ delay: 0.3 }}
+              className="text-base sm:text-lg text-muted-foreground max-w-lg leading-relaxed"
             >
-              Discover the best cricket boxes near you, split payments with friends, and track your matches.
+              Discover certified box cricket turfs near you, reserve premium night floodlit slots, split payments seamlessly with your team, and track your match leaderboards.
             </motion.p>
 
-          
+            {/* Quick feature checklist */}
             <motion.div
-              onMouseMove={handleButtonMove}
-              onMouseLeave={() => { btnX.set(0); btnY.set(0); }}
-              style={{ x: magneticX, y: magneticY }}
-              className="inline-block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-wrap gap-4 text-xs font-medium text-muted-foreground pt-1"
             >
-              <motion.button 
-                whileTap={{ scale: 0.95 }}
-                className="relative overflow-hidden bg-green-500 text-white px-8 py-3 rounded-full font-semibold inline-flex items-center gap-2 group transition-shadow hover:shadow-[0_0_25px_rgba(34,197,94,0.5)]"
-              >
-                <span className="relative z-10 flex items-center gap-2" onClick={() => window.location.href = '/turfs'}>
-                  Explore Now
-                  <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-                    <ChevronRight size={20} />
-                  </motion.span>
-                </span>
-              
-                <motion.div 
-                  initial={{ y: "100%" }}
-                  whileHover={{ y: 0 }}
-                  className="absolute inset-0 bg-slate-900 z-0"
-                  transition={{ type: "spring", damping: 25 }}
-                />
-              </motion.button>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck size={16} className="text-emerald-500" />
+                <span>Verified Pitches</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Trophy size={16} className="text-amber-500" />
+                <span>Tournament Ready</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Instant Confirmation</span>
+              </div>
             </motion.div>
+
+            {/* CTA Button */}
+            <div className="pt-2">
+              <motion.div
+                onMouseMove={handleButtonMove}
+                onMouseLeave={() => { btnX.set(0); btnY.set(0); }}
+                style={{ x: magneticX, y: magneticY }}
+                className="inline-block"
+              >
+                <motion.button 
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/turfs')}
+                  className="relative overflow-hidden bg-emerald-500 text-white px-8 py-3.5 rounded-full font-bold inline-flex items-center gap-2 group shadow-lg shadow-emerald-500/25 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all cursor-pointer"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Explore All Turfs
+                    <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                      <ChevronRight size={20} />
+                    </motion.span>
+                  </span>
+                
+                  <motion.div 
+                    initial={{ y: "100%" }}
+                    whileHover={{ y: 0 }}
+                    className="absolute inset-0 bg-emerald-600 z-0"
+                    transition={{ type: "spring", damping: 25 }}
+                  />
+                </motion.button>
+              </motion.div>
+            </div>
           </div>
 
          

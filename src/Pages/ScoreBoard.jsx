@@ -9,7 +9,6 @@ function ScoreBoard() {
             try {
                 const resposne=await axios.get(`${routes.getScorecard}`,{
                     headers:{Authorization:`Bearer ${token}`}})
-                    console.log(resposne.data);
                     setScorecard(resposne.data);
                     
             } catch (error) {

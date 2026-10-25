@@ -15,8 +15,7 @@ export default function ForgotPassword() {
 
         try {
             // Using localhost as per prompt request: http://localhost:5000/api/auth/forget-password
-            const response = await axios.post('https://nonsolidified-annika-criminally.ngrok-free.dev/api/auth/forget-password', { email });
-            console.log("Forgot Password Response:", response.data);
+            const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/forget-password', { email });
 
             toast.success("Reset link sent to your email!");
             setSubmitted(true);

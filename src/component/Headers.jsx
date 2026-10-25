@@ -40,7 +40,6 @@ const Header = () => {
     const fetchNotifications = async () => {
       // Logic: Only fetch if logged in and token exists
       if (!isLoggedIn || !token) return;
-      console.log(routes.mygroup);
       
 
       try {
@@ -48,7 +47,6 @@ const Header = () => {
             headers: { Authorization: `Bearer ${token}` } 
         }); 
         
-        console.log(response);
         
         if (response.status === 200 && response.data) {
           setMyGroups(response.data || []);
@@ -56,7 +54,6 @@ const Header = () => {
         }
       } catch (error) {
         console.error('Error fetching notifications:', error);
-        console.log(error);
         
         setMyGroups([]);
         setPendingInvites([]);

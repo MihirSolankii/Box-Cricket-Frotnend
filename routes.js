@@ -1,5 +1,4 @@
-const url=import.meta.env.VITE_API_KEY;
-
+const url = import.meta.env.VITE_API_KEY || "https://box-cricket-backend-v7vh.onrender.com";
 export const routes={
     signup:`${url}/api/auth/signup`,
     login:`${url}/api/auth/login`,

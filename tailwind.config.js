@@ -3,7 +3,6 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      extend: {
       colors: {
         border: "hsl(var(--border))",
         background: "hsl(var(--background))",
@@ -11,7 +10,6 @@ export default {
         primary: "hsl(var(--primary))",
         secondary: "hsl(var(--secondary))",
       },
-    },
     },
   },
   plugins: [],

@@ -25,11 +25,10 @@ const Invitations = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log(response.data);
         
         if (response.data.success) {
           setInvites(response.data.invites);
-          // console.log(response.data.invites._id);
+          // 
           
          
         }
@@ -57,7 +56,6 @@ const Invitations = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         toast.success("Group Joined!");
-        console.log("invite accepted ",response);
         
           navigate(`/group/${response.data.group._id}`)
       } else {

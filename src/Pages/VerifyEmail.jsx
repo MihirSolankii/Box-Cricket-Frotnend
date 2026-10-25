@@ -2,7 +2,6 @@ import React from 'react'
 
 function VerifyEmail() {
     const email=localStorage.getItem("userEmail");
-    console.log(email);
     
 
   return (

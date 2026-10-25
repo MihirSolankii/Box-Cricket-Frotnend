@@ -120,7 +120,6 @@ function ScoreCard() {
             setMaxOversInput(data.maxOvers);
         });
           socket.on("notification", (data) => {
-            console.log("🔔 Notification:", data);
             
             // Display toast based on type
             switch (data.type) {

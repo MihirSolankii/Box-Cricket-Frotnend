@@ -18,9 +18,6 @@ function LoginForm() {
       email:formData.email,
       password:formData.password,
     })
-    console.log(response);
-    console.log("token",response.data.token);
-    console.log("userId",response.data.user._id);
     
     
     localStorage.setItem("UserCricBoxToken",response.data.token);
@@ -30,7 +27,6 @@ function LoginForm() {
   }
   useEffect(()=>{
     loadData();
-   console.log("form useeffect",formData);
    
   },[formData])
 
@@ -48,12 +44,10 @@ function LoginForm() {
           password: Yup.string().min(8, "Minimum 8 characters").required("Password is required"),
         })}
         onSubmit={(values, { resetForm }) => {
-          console.log(values)
           setFormData({
             email:values.email,
             password:values.password
           })
-          console.log("values are ",values.email);
        
 
    

@@ -9,75 +9,78 @@ export const useTurfData = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBoxes = async (coords = null) => {
       try {
-        // 1. Check Local Storage for Data
-        // const cachedData = localStorage.getItem("turfData");
+        setLoading(true);
+        const payload = (coords && (coords.latitude || coords.lat) && (coords.longitude || coords.lng))
+          ? { lat: coords.latitude || coords.lat, lng: coords.longitude || coords.lng }
+          : {};
 
-        // if (cachedData) {
-        //   console.log("Loading from Local Storage");
-        //   setData(JSON.parse(cachedData));
-        //   setLoading(false);
-        //   return;
-        // }
+        let response = await axios.post(routes.getData, payload);
+        let boxes = response.data?.boxes || [];
 
-        // 2. If no data, Get Location
-        if (!navigator.geolocation) {
-          throw new Error("Geolocation is not supported");
+        // If user location yields 0 boxes, load all available boxes across cities
+        if (boxes.length === 0 && Object.keys(payload).length > 0) {
+          response = await axios.post(routes.getData, {});
+          boxes = response.data?.boxes || [];
         }
 
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            console.log("longtitude and latitude :",latitude,longitude);
-            
-            
-            // Save location for future reference
-            localStorage.setItem("userLocation", JSON.stringify({ latitude, longitude }));
-             console.log("routes.getData",routes.getData);
-             console.log("before response.....");
-             
-            // 3. Call API
-            const response = await axios.post("https://box-cricket-backend-v7vh.onrender.com/api/user/box", {
-              lat: latitude,
-              lng: longitude
-            });
-                console.log("resoinse",routes.getData);
-            
-            console.log(" this is found what is error ",response.data);
-            console.log("ooooooo",response.data.boxes);
-            
-            
-
-            const boxes = response.data.boxes;
-            console.log("after response///////////////");
-            
-            
-            // 4. Save Data to Local Storage
-            // localStorage.setItem("turfData", JSON.stringify(boxes));
-            
-            setData(boxes);
-            setLoading(false);
-          },
-          (err) => {
-            setError("Unable to retrieve location");
-            setLoading(false);
-          }
-        );
+        setData(boxes);
+        setError("");
       } catch (err) {
-        console.error(err);
-        console.log(err);
-        
-        setError("Failed to load venues");
+        // Fallback: try fetching all boxes with empty payload
+        try {
+          const fallbackRes = await axios.post(routes.getData, {});
+          const boxes = fallbackRes.data?.boxes || [];
+          if (boxes.length > 0) {
+            setData(boxes);
+            setError("");
+            return;
+          }
+        } catch (_) {}
+        setError(err.response?.data?.message || "Failed to load venues");
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    // 1. Check local storage first
+    const storedLocation = localStorage.getItem("userLocation");
+    let parsedLocation = null;
+    if (storedLocation) {
+      try {
+        parsedLocation = JSON.parse(storedLocation);
+      } catch (e) {
+        console.error("Error parsing userLocation", e);
+      }
+    }
+
+    if (parsedLocation && parsedLocation.latitude && parsedLocation.longitude) {
+      fetchBoxes(parsedLocation);
+      return;
+    }
+
+    // 2. Try geolocation, fallback to fetching all boxes without location if denied/unavailable
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          localStorage.setItem("userLocation", JSON.stringify({ latitude, longitude }));
+          fetchBoxes({ latitude, longitude });
+        },
+        (geoErr) => {
+          console.warn("Geolocation denied/failed. Fetching all boxes without location:", geoErr.message);
+          fetchBoxes(null);
+        },
+        { timeout: 7000 }
+      );
+    } else {
+      console.warn("Geolocation not supported. Fetching all boxes without location.");
+      fetchBoxes(null);
+    }
   }, []);
 
   useEffect(()=>{
-    console.log("idli dhosa ....",data);
     
   },[])
 

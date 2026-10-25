@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 import MyInput from '@/component/formcomponent/MyInput';
+import { routes } from '../../routes';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -44,10 +45,9 @@ export default function Login() {
                 localStorage.removeItem('rememberedEmail');
             }
 
-            const response = await axios.post('https://box-cricket-backend-v7vh.onrender.com/api/auth/login', formData);
+            const response = await axios.post(routes.login, formData);
             const data = response.data;
 
-            console.log("Login Success:", data);
 
             // Store Data - Assuming standard structure, matching Signup logic
             // Adjust these key paths based on your actual Login API response structure!
@@ -55,11 +55,8 @@ export default function Login() {
             if (data.token) localStorage.setItem('UserCricBoxToken', data.token);
              localStorage.setItem("UserCricBoxToken",response.data.token);
     localStorage.setItem("UserId",data.user._id);
-            console.log("data.otken",data.token);
             const token=localStorage.getItem("UserCricBoxToken")
-            console.log("token ",token);
            const userId =localStorage.getItem("UserId")
-              console.log("userId ",userId);
             
             
             

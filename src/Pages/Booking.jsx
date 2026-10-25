@@ -54,14 +54,14 @@ const Booking = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { turf, courtId, court, date, slot } = location.state || {};
-  // console.log("turf",turf);
+  // 
 
-  //   console.log("turf id",turf._id);
-  //   console.log("date",date);
-  //   console.log("slot",slot); 
+  //   
+  //   
+  //   
 
-  //   console.log("Court ID:", courtId);
-  // console.log("Court:", court); 
+  //   
+  // 
 
 
 
@@ -128,7 +128,6 @@ const Booking = () => {
 
       const token = localStorage.getItem("UserCricBoxToken");
       const userId = localStorage.getItem("UserId");
-      console.log(userId);
 
 
       const { startTime, endTime } = parseSlot(slot);
@@ -158,10 +157,8 @@ const Booking = () => {
         throw new Error(tempBookingData.message || 'Failed to lock slot');
       }
 
-      console.log("booking response:", tempBookingData);
 
       const tempBookingId = tempBookingData.booking?._id;
-      console.log("hello this is booking ",tempBookingId);
       localStorage.setItem("bookingid", tempBookingId)
 
 
@@ -183,7 +180,6 @@ const Booking = () => {
         throw new Error(orderData.message || 'Failed to create payment order');
       }
 
-      console.log("order response:", orderData);
 
       const amount = orderData.order.amount;
       const currency = orderData.order.currency
@@ -233,7 +229,6 @@ const Booking = () => {
 
     } catch (err) {
       console.error('Booking error:', err);
-      console.log(err);
       setError(err.message || 'Something went wrong. Please try again.');
       setIsProcessing(false);
     }
@@ -246,12 +241,9 @@ const Booking = () => {
 
   const confirmPayment = async (response) => {
 
-    console.log("---------------------------------------------------inside verifypayemnt---------------------");
     const token = localStorage.getItem("UserCricBoxToken");
 
-    console.log("hello payment", response.razorpay_payment_id);
     const tempid = localStorage.getItem("bookingid")
-    console.log("hello................", tempid);
 
 
     try {
@@ -282,12 +274,10 @@ const Booking = () => {
         navigate("/create-group");
       } else {
         alert(data.message);
-        console.log(data);
 
       }
     } catch (err) {
       console.error(err);
-      console.log("error")
       alert("Payment verification failed");
     }
   };
